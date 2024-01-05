@@ -147,7 +147,7 @@ docker exec -it tryiris bash
 
 データを自動生成する場合は、IRISのTRYネームスペースにログインしてから
 ```
-iris sessioon iris -U TRY
+iris session iris -U TRY
 ```
 
 以下実行するか、
