@@ -1,8 +1,8 @@
-﻿version: '3.2'
+﻿version: '3.7'
 
 services:
   iris:
-    #image: store/intersystems/iris-ml-community:2020.3.0.304.0
+    #image: containers.intersystems.com/intersystems/iris-community:latest-cd
     build:
       context: .
       dockerfile: Dockerfile
