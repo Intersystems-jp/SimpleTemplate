@@ -3,16 +3,19 @@
 
 設定については、適宜変更してご活用いただけます。
 
-
 ## Gitに含まれるファイルについて
 
-|種類|ファイル|説明|
-|:--|:--|:--|
-|接続設定|[settings.json](/.vscode/settings.json)|VSCodeからIRISへ接続するときの設定用ファイル　記述方法詳細は開発者コミュニティの記事 [VSCodeを使ってみよう！](https://jp.community.intersystems.com/node/482976/japanese) をご参照ください。|
-|ソースコードサンプル|[Person.cls](/src/Test/Person.cls)|コンテナビルド時にIRISにインポートするサンプルクラス定義です。|
-|インストーラー|[Installer.cls](./Installer.cls)|コンテナビルド時に初期設定用定義が記載されているインストーラークラス|
-|スクリプト|[iris.script](./iris.script)|コンテナビルド時に実行したいコマンドを記載したファイル（IRISログインに使用する irisコマンドに入力したいObjectScriptのコマンドを記述しています）|
+|種類|ファイル|概要|詳細|
+|:--|:--|:--|:--|
+|接続設定|[settings.json](/.vscode/settings.json)|VSCodeからIRISへ接続するときの設定用ファイル。|[VSCodeを使ってみよう！](https://jp.community.intersystems.com/node/482976/japanese)|
+|Dockerfileサンプル|[Dockerfile](/Dockerfile)|コンテナビルド時に実行したい処理を記述しています。|[Dockerfileで実行している内容](#dokerfileで実行している内容)|
+|スクリプト|[iris.script](./iris.script)|コンテナビルド時に実行したい処理を記載したファイル（IRISログイン後に実行したいコマンドやメソッドを記述しています）|[スクリプトで実行している内容](#irisscriptで実行している内容)
+|インストーラー|[Installer.cls](./Installer.cls)|コンテナビルド時に初期設定用定義が記載されているインストーラークラス（*1）|[インストーラーで実行している内容](#installerclsで実行している内容)|
+|ソースコードサンプル|[Person.cls](/src/Test/Person.cls)|コンテナビルド時にIRISにインポートするサンプルクラス定義です。|[クラス定義の内容](#testpersoncls)|
+|docker-composeサンプル|[docker-compose.yml](/docker-compose.yml)|<span style="color:green;">**コンテナ内ポート1972**を**ホスト上ポート1972**</span>に、<span style="color:orange;">**コンテナ内ポート52773**を**ホスト上ポート52773**</span>に割り当てるように記載しています。また、<span style="color:darkblue;">**カレントディレクトリ**を**コンテナ内ディレクトリ /ISC**</span> にマウントするように記載しています。
 
+
+> （*1）インストーラーについて詳しくはドキュメント「[インストール・マニフェストの作成および使用](https://docs.intersystems.com/irislatestj/csp/docbook/DocBook.UI.Page.cls?KEY=GCI_manifest)」をご参照ください。
 
 ## コンテナ開始後のイメージ図
 
@@ -22,7 +25,16 @@
 ![環境イメージ図](/templateimage.png)
 
 
-## コンテナ起動までの手順
+## コンテナビルド前の確認
+
+サンプルの[Dockerfile](/Dockerfile)では、最新版CDリリースのInterSystems IRIS コミュニティエディションのイメージを使用するように記述しています（[Dockerfile](/Dockerfile)3行目）。
+
+InterSystems IRIS for Health コミュニティエディションの最新版CDリリースを利用する場合は、[Dockerfile](/Dockerfile)3行目をコメントアウトしてください。
+
+また、その他のイメージをご利用いただく場合は、[コンテナレジストリ](https://containers.intersystems.com/contents)にあるイメージをpullし、[Dockerfile](/Dockerfile)で指定するイメージ名を変更してからビルドを行ってください。
+
+
+## コンテナ開始までの手順
 詳細は、[docker-compose.yml](./docker-compose.yml) をご参照ください。
 
 Git展開後、**./ は コンテナ内 /ISC ディレクトリをマウントしています。**
@@ -34,7 +46,7 @@ Git展開後、**./ は コンテナ内 /ISC ディレクトリをマウント�
 ```
 git clone このGitのURL
 ```
-cloneしたディレクトリに移動後、以下実行します。
+cloneしたディレクトリに移動後、以下実行します。（コンテナを作成します）
 
 ```
 $ docker-compose build
