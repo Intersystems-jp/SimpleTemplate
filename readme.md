@@ -140,12 +140,28 @@ IRIS初回アクセス時に初期パスワードを変更したい場合は、�
 ## [Test.Person.cls](/src/Test/Person.cls)
 Test.Personクラス（またはテーブル）としてTRYネームスペースにインポートされます。
 
-データを自動生成する場合は、IRISログイン後以下実行するか
+定義やデータを確認するために、コンテナにログインします。（コンテナからホストに戻る場合は`exit`を入力します。）
 ```
-set $namespace="TRY"
+docker exec -it tryiris bash
+```
+
+データを自動生成する場合は、IRISのTRYネームスペースにログインしてから
+```
+iris sessioon iris -U TRY
+```
+
+以下実行するか、
+```
 do ##class(Test.Person).CreateData(10) //10件作成
 ```
-管理ポータル > [システムエクスプローラ] > [SQL] のクエリ実行タブに以下入力しストアドプロシージャを実行します。
+> ※プロンプトをIRISログイン前に戻す場合は、`halt`コマンドを実行します。
+
+IRISのSQLシェルにログインして（TRYネームスペースに移動した状態でログイン）
+
+```
+iris sql iris -U TRY
+```
+ストアドプロシージャ―を実行します。（プロンプトを元に戻したいときは、`quit`を入力します。）
 ```
 call Test.Person_CreateData(10)
 ```
